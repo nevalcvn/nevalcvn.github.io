@@ -4,7 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neval Civan — Bilgisayar Mühendisliği Öğrencisi</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230A1220'/%3E%3Ccircle cx='32' cy='32' r='22' stroke='%234FA8FF' stroke-width='2.5' fill='none' opacity='0.9'/%3E%3Ccircle cx='32' cy='32' r='13' stroke='%234FA8FF' stroke-width='2' fill='none' opacity='0.55'/%3E%3Cline x1='32' y1='4' x2='32' y2='15' stroke='%234FA8FF' stroke-width='2.5'/%3E%3Cline x1='32' y1='49' x2='32' y2='60' stroke='%234FA8FF' stroke-width='2.5'/%3E%3Cline x1='4' y1='32' x2='15' y2='32' stroke='%234FA8FF' stroke-width='2.5'/%3E%3Cline x1='49' y1='32' x2='60' y2='32' stroke='%234FA8FF' stroke-width='2.5'/%3E%3Ccircle cx='32' cy='32' r='4.5' fill='%23FFB454'/%3E%3C/svg%3E">
 <meta name="description" content="Neval Civan — Bilgisayar Mühendisliği öğrencisi, aviyonik ve gömülü sistemler üzerine çalışıyor.">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Neval Civan — Portfolyo">
+<meta property="og:title" content="Neval Civan — Bilgisayar Mühendisliği Öğrencisi">
+<meta property="og:description" content="Aviyonik sistemler, gömülü yazılım ve savunma sanayii üzerine çalışan bir mühendis adayının portfolyosu.">
+<meta property="og:url" content="https://nevalcvn.github.io/">
+<meta property="og:image" content="https://nevalcvn.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="tr_TR">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Neval Civan — Bilgisayar Mühendisliği Öğrencisi">
+<meta name="twitter:description" content="Aviyonik sistemler, gömülü yazılım ve savunma sanayii üzerine çalışan bir mühendis adayının portfolyosu.">
+<meta name="twitter:image" content="https://nevalcvn.github.io/og-image.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -113,6 +130,7 @@
     .blip-a, .blip-b, .blip-c { animation: none; opacity: 0.6; }
     .status-dot { animation: none; }
     .project-more[open] .project-more-body { animation: none !important; }
+    .project-more-body::before { animation: none !important; transform: scaleY(1); }
   }
   .coords {
     font-family: var(--font-body);
@@ -300,9 +318,31 @@
     gap: 5px;
   }
   .project-more summary::-webkit-details-marker { display: none; }
-  .project-more-body { margin-top: 14px; max-width: 58ch; }
+  .project-more-body {
+    margin-top: 14px;
+    max-width: 58ch;
+    position: relative;
+    padding-left: 16px;
+  }
+  .project-more-body::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 2px;
+    bottom: 2px;
+    border-left: 1.5px dashed var(--blue);
+    opacity: 0.55;
+    transform: scaleY(0);
+    transform-origin: top;
+  }
   .project-more[open] .project-more-body {
     animation: fadeInDown 0.25s ease-out;
+  }
+  .project-more[open] .project-more-body::before {
+    animation: draw-telemetry-line 0.4s ease-out 0.05s forwards;
+  }
+  @keyframes draw-telemetry-line {
+    to { transform: scaleY(1); }
   }
   @keyframes fadeInDown {
     from { opacity: 0; transform: translateY(-6px); }
@@ -367,6 +407,12 @@
     border-radius: 100px;
     background: var(--bg);
   }
+  .nda-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .nda-icon { width: 13px; height: 13px; flex-shrink: 0; color: var(--amber); opacity: 0.85; }
 
   .timeline { display: grid; gap: 22px; }
   .titem { display: grid; grid-template-columns: 130px 1fr; gap: 22px; }
@@ -482,6 +528,34 @@
     .titem { grid-template-columns: 1fr; gap: 6px; }
     .radar-bg { width: 340px; height: 340px; }
   }
+
+  @media print {
+    @page { margin: 1.6cm; }
+    :root {
+      --bg: #ffffff;
+      --bg-panel: #ffffff;
+      --bg-panel-hover: #ffffff;
+      --ink: #14161a;
+      --ink-dim: #4a4f58;
+      --line: #d6d9de;
+      --blue: #1d5fb8;
+      --amber: #a15c07;
+    }
+    body { background: #fff; }
+    .radar-bg, .flight-path, .status-dot { display: none !important; }
+    .reveal { opacity: 1 !important; transform: none !important; }
+    a { text-decoration: underline; }
+    .links a, .cv-btn { text-decoration: none; }
+    .cv-btn { display: none !important; }
+    .project, .titem, .cert-btn, section { break-inside: avoid; }
+    .project { box-shadow: none !important; transform: none !important; }
+    .project::before { display: none !important; }
+    .project-tag { background: none; border-color: var(--line); }
+    .chip { background: none; }
+    .project-more summary { display: none !important; }
+    .project-more-body { display: block !important; margin-top: 10px; }
+    .project-more-body::before { display: none !important; }
+  }
 </style>
 </head>
 <body>
@@ -580,7 +654,14 @@
           <div class="project-title">Pavelsis Aviyonik — Yazılım Tasarım Stajı</div>
           <div class="project-desc">Aviyonik birimlerin haberleşme testleri için UDP ve seri port (RS-232/UART) protokolleri üzerinden veri paketlerini doğrulayan masaüstü izleme ve test araçları üzerinde çalıştım.</div>
         </div>
-        <span class="project-link disabled">Staj deneyimi</span>
+        <span class="project-link disabled nda-badge">
+          <svg class="nda-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M8 11V7.5C8 5.01 10.01 3 12.5 3C14.99 3 17 5.01 17 7.5V11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <circle cx="12" cy="15.5" r="1.4" fill="currentColor"/>
+          </svg>
+          Gizlilik / NDA
+        </span>
       </div>
 
       <div class="project reveal">
@@ -920,6 +1001,24 @@
       details.addEventListener('toggle', function () {
         label.textContent = details.open ? 'Detayları gizle' : 'Detayları gör';
       });
+    });
+  })();
+</script>
+<script>
+  (function () {
+    var closedBeforePrint = [];
+    window.addEventListener('beforeprint', function () {
+      closedBeforePrint = [];
+      document.querySelectorAll('.project-more').forEach(function (details) {
+        if (!details.open) {
+          closedBeforePrint.push(details);
+          details.open = true;
+        }
+      });
+    });
+    window.addEventListener('afterprint', function () {
+      closedBeforePrint.forEach(function (details) { details.open = false; });
+      closedBeforePrint = [];
     });
   })();
 </script>
